@@ -66,15 +66,15 @@ const images = [
 
 const gallery = document.querySelector(".gallery");
 gallery.insertAdjacentHTML("beforeend", createMarkup(images));
-gallery.addEventListener("click", handleProductClick);
+gallery.addEventListener("click", openLargeImage);
 
 function createMarkup(array) {
   return array
     .map(
       (image) => `
-    <li class="item gallery-item">
+    <li class="gallery-item">
     <a class="gallery-link" href="${image.original}">
-       <img src="${image.preview}" alt="${image.description}" class="gallery-image" >
+       <img src="${image.preview}" alt="${image.description}" class="gallery-image" data-source="${image.original}">
     </a>
     </li>
   `
@@ -82,17 +82,21 @@ function createMarkup(array) {
     .join("");
 }
 
-function handlePhotoClick(event) {
+function openLargeImage(event) {
   event.preventDefault();
   if (event.target === event.currentTarget) {
-    event.preventDefault();
     return;
   }
 
   const currentImage = event.target.closest(".gallery-item");
-  const image = images.find((item) => item);
-  const instance = basicLightbox.create(`<div class="modal">
-    <img crs="${image.original}" alt="${image.description}">
+  const imageSource = currentImage.dataset.source;
+  const imageLarge = images.find(
+    (image) => images.data - source === Image(imageSource)
+  );
+
+  const instance = basicLightbox.create(`
+    <div class="modal">
+    <img src="${imageLarge}" width="1200">
   </div>`);
 
   instance.show();
