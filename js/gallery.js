@@ -88,16 +88,18 @@ function openLargeImage(event) {
     return;
   }
 
-  const currentImage = event.target.closest(".gallery-item");
-  const imageSource = currentImage.dataset.source;
-  const imageLarge = images.find(
-    (image) => images.data - source === Image(imageSource)
+  const instance = basicLightbox.create(
+    `<img src="${event.target.dataset.source}" width="800" height="600">`,
+    {
+      onShow: () => document.addEventListener("keydown", onEscPress),
+      ocClose: () => document.removeEventListener("keydown", onEscPress),
+    }
   );
-
-  const instance = basicLightbox.create(`
-    <div class="modal">
-    <img src="${imageLarge}" width="1200">
-  </div>`);
-
   instance.show();
+}
+
+function onEscPress(event) {
+  if (event.code === "Escape") {
+    instance.close();
+  }
 }
